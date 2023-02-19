@@ -1,0 +1,1655 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "User system",
+    "version": "0.0.0",
+    "description": "Docs"
+  },
+  "paths": {
+    "/users/login": {
+      "post": {
+        "summary": "users login",
+        "description": "Code will be sent to email after User Login",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "user_id": "12ewq123ewq1234rygtr45",
+                    "username": "Toshmat",
+                    "password": "2323"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "ok",
+                "content": {
+                  "application/json:": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "default": "Username and password",
+                          "description": "Message of the response"
+                        },
+                        "status": {
+                          "type": "integer",
+                          "format": "int64",
+                          "default": "200",
+                          "description": "Status of the response"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "tags": ["Users"]
+      }
+    },
+
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register User",
+        "description": "Username and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegister"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "ok",
+              "content": {
+                "application/json:": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserRegister"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/category/get": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "View  Category",
+        "description": "With this api you can view Category",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CategoryGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/category/post": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "create Category",
+        "description": "With this api you can create Category",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CategoryPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/category/update/{id}": {
+      "put": {
+        "tags": ["Category"],
+        "summary": "update Category",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can update Category",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Update",
+                      "description": "Message of the response"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int64",
+                      "default": "200",
+                      "description": "Status of the response"
+                    },
+                    "data": {
+                      "type": "object",
+                      "default": {
+                        "category_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                        "category_title": "Kiyimlar"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/category/delete/{id}": {
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete Category",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can delete Category",
+
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CategoryDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subCategory/get": {
+      "get": {
+        "tags": ["SubCategory"],
+        "summary": "View  SubCategory",
+        "description": "With this api you can view SubCategory",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/SubCategoryGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subCategory/post": {
+      "post": {
+        "tags": ["SubCategory"],
+        "summary": "create SubCategory",
+        "description": "With this api you can create SubCategory",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubCategoryPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/SubCategoryPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subCategory/update/{id}": {
+      "put": {
+        "tags": ["SubCategory"],
+        "summary": "update SubCategory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can update Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubCategoryPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Update",
+                      "description": "Message of the response"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int64",
+                      "default": "200",
+                      "description": "Status of the response"
+                    },
+                    "data": {
+                      "type": "object",
+                      "default": {
+                        "subCategory_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                        "subCategory_title": "Oyoq kiyim"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subCategory/delete/{id}": {
+      "delete": {
+        "tags": ["SubCategory"],
+        "summary": "Delete SubCategory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can delete Category",
+
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/SubCategoryDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subClass/get": {
+      "get": {
+        "tags": ["SubClass"],
+        "summary": "View  SubClass",
+        "description": "With this api you can view SubClass",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/SubClassGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subClass/post": {
+      "post": {
+        "tags": ["SubClass"],
+        "summary": "create SubClass",
+        "description": "With this api you can create SubClass",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubClassPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/SubClassPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subClass/update/{subClass_id}": {
+      "put": {
+        "tags": ["SubClass"],
+        "summary": "update SubClass",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subClass_id",
+            "schema": {
+              "subClass_id": "id_example"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can update Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubClassPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Update",
+                      "description": "Message of the response"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int64",
+                      "default": "200",
+                      "description": "Status of the response"
+                    },
+                    "data": {
+                      "type": "object",
+                      "default": {
+                        "subClass_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                        "subClass_title": "Erkaklar oyoq kiyimi"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/subClass/delete/{id}": {
+      "delete": {
+        "tags": ["SubClass"],
+        "summary": "Delete SubClass",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can delete Category",
+
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/SubClassDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/get": {
+      "get": {
+        "tags": ["products"],
+        "summary": "View  products",
+        "description": "With this api you can view products",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/ProductGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/get/{id}": {
+      "get": {
+        "tags": ["products"],
+        "summary": "View  products",
+        "description": "With this api you can view products",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "id_example"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/ProductOneGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/pagination": {
+      "get": {
+        "tags": ["products"],
+        "summary": "View  products",
+        "description": "With this api you can view products",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer",
+              "example": {
+                "description": "0"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "example": {
+                "description": "10"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/ProductPagination"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/post": {
+      "post": {
+        "tags": ["products"],
+        "summary": "create products",
+        "description": "With this api you can create products",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/ProductPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/update/{product_id}": {
+      "put": {
+        "tags": ["products"],
+        "summary": "update products",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "schema": {
+              "product_id": "id_example"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can update Products",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "Update",
+                      "description": "Message of the response"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int64",
+                      "default": "200",
+                      "description": "Status of the response"
+                    },
+                    "data": {
+                      "type": "object",
+                      "default": {
+                        "product_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                        "title": "salamader"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/products/delete/{product_id}": {
+      "delete": {
+        "tags": ["products"],
+        "summary": "Delete products",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "schema": {
+              "product_id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can delete Category",
+
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/ProductDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/comments/get": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "View  Comments",
+        "description": "With this api you can view Comments",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CommentsGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/comments/get/{product_id}": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "View  Comments",
+        "description": "With this api you can view Comments",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "schema": {
+              "product_id": "id_example"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CommentsGetOne"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/comments/post": {
+      "post": {
+        "tags": ["Comments"],
+        "summary": "create Comments",
+        "description": "With this api you can create Comments",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentsPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CommentsPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/comments/delete/{id}": {
+      "delete": {
+        "tags": ["Comments"],
+        "summary": "Delete Comments",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can delete Category",
+
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/CommentsDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/orders/get": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "View  Orders",
+        "description": "With this api you can view Orders",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/OrdersGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/orders/post": {
+      "post": {
+        "tags": ["Orders"],
+        "summary": "create Orders",
+        "description": "With this api you can create Orders",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrdersPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/OrdersPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/orders/update/{user_id}": {
+      "put": {
+        "tags": ["Orders"],
+        "summary": "update Orders",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "user_id": "id_example"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can update Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrdersPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersPut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/orders/delete/{user_id}": {
+      "delete": {
+        "tags": ["Orders"],
+        "summary": "Delete Orders",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "user_id": "1120f438-9713-4cab-830e-0bbf97fa3446"
+            },
+            "required": true
+          },
+          {}
+        ],
+        "description": "With this api you can delete Category",
+
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/OrdersDelete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/rate/get": {
+      "get": {
+        "tags": ["Rate"],
+        "summary": "View  Rate",
+        "description": "With this api you can view Rate",
+        "parameters": [{}],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/RateGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/rate/post": {
+      "post": {
+        "tags": ["Rate"],
+        "summary": "create Rate",
+        "description": "With this api you can create Rate",
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatePost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json:": {
+                "schema": {
+                  "ref": "#components/schema/RatePost"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "UserLogin": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Toshmat"
+          },
+          "password": {
+            "type": "string",
+            "example": "2323"
+          }
+        }
+      },
+
+      "UserRegister": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Toshmat"
+          },
+          "password": {
+            "type": "string",
+            "example": "2323"
+          }
+        }
+      },
+
+      "CategoryGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view Category",
+            "default": [
+              {
+                "category_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "category_title": "OK",
+                "subCategory_id": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "CategoryPost": {
+        "type": "object",
+        "properties": {
+          "category_title": {
+            "type": "string",
+            "example": "Kiyimlar"
+          }
+        }
+      },
+
+      "CategoryPut": {
+        "type": "object",
+        "properties": {
+          "category_title": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "category_title": "Kiyimlar"
+        }
+      },
+
+      "CategoryDelete": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "title": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          }
+        }
+      },
+
+      "SubCategoryGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view SubCategory",
+            "default": [
+              {
+                "id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "title": "OK",
+                "subClass_id": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "SubCategoryPost": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Oyoq kiyim"
+          },
+          "category_id": {
+            "type": "string",
+            "example": "id1234"
+          }
+        }
+      },
+
+      "SubCategoryPut": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "category_id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "title": "Oyoq kiyim",
+          "category_id": "id1234"
+        }
+      },
+
+      "SubCategoryDelete": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "title": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          }
+        }
+      },
+
+      "SubClassGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view SubCategory",
+            "default": [
+              {
+                "id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "title": "OK",
+                "product_id": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "SubClassPost": {
+        "type": "object",
+        "properties": {
+          "subClass_title": {
+            "type": "string",
+            "example": "erkaklar oyoq kiyimi"
+          },
+          "subCategory_id": {
+            "type": "string",
+            "example": "id1234"
+          }
+        }
+      },
+
+      "SubClassPut": {
+        "type": "object",
+        "properties": {
+          "subClass_title": {
+            "type": "string"
+          },
+          "subCategory_id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "subClass_title": "Erkaklar oyoq kiyimi",
+          "subCategory_id": "id1234"
+        }
+      },
+
+      "SubClassDelete": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "subClass_title": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          }
+        }
+      },
+
+      "ProductGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view Products",
+            "default": [
+              {
+                "product_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "product_title": "OK",
+                "productComment": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "ProductOneGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view Products",
+            "default": [
+              {
+                "product_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "product_title": "OK",
+                "productComment": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "ProductPagination": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view Products",
+            "default": [
+              {
+                "product_id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "product_title": "OK",
+                "productComment": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "ProductPost": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "salamader"
+          },
+          "price": {
+            "type": "string",
+            "example": "1 200 000"
+          },
+          "brand": {
+            "type": "string",
+            "example": "salamander"
+          },
+          "netto": {
+            "type": "string",
+            "example": "salamander"
+          },
+          "img": {
+            "type": "string",
+            "example": "tips img"
+          },
+          "subClass_id": {
+            "type": "string",
+            "example": "id1234"
+          }
+        }
+      },
+
+      "ProductPut": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string",
+            "example": "1 100 000"
+          },
+          "subClass_id": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "title": "Salamader"
+        }
+      },
+
+      "ProductDelete": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "title": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          }
+        }
+      },
+
+      "CommentsGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view Products",
+            "default": [
+              {
+                "product_title": "Bir narsa",
+                "user_title": "Ali",
+                "comment_title": "zor"
+              }
+            ]
+          }
+        }
+      },
+
+      "CommentsGetOne": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view Products",
+            "default": [
+              {
+                "product_title": "Bir narsa",
+                "user_title": "Ali",
+                "comment_title": "zor"
+              }
+            ]
+          }
+        }
+      },
+
+      "CommentsPost": {
+        "type": "object",
+        "properties": {
+          "comment_title": {
+            "type": "string",
+            "example": "zor ekan"
+          },
+          "userId": {
+            "type": "string",
+            "example": "user_id_example"
+          },
+          "productId": {
+            "type": "string",
+            "example": "product_id_example"
+          }
+        }
+      },
+
+      "CommentsDelete": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "title": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "product_title": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          },
+          "username": {
+            "type": "string",
+            "example": "2058e22a-e092-4cb9-a854-7c16f3f373a1"
+          }
+        }
+      },
+
+      "OrdersGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view SubCategory",
+            "default": [
+              {
+                "id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "user_id": [{}],
+                "product_id": [{}]
+              }
+            ]
+          }
+        }
+      },
+
+      "OrdersPost": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "example": "product_id_example"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "user_id_example"
+          }
+        }
+      },
+
+      "OrdersPut": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "example": "product_id_example"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "user_id_example"
+          }
+        }
+      },
+
+      "OrdersDelete": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "example": "product_id_example"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "user_id_example"
+          }
+        }
+      },
+
+      "RateGet": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "OK",
+            "description": "Message of the response"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "default": "200",
+            "description": "Status of the response"
+          },
+          "data": {
+            "type": "object",
+            "description": "view SubCategory",
+            "default": [
+              {
+                "id": "1120f438-9713-4cab-830e-0bbf97fa3446",
+                "product_id": [{}],
+                "rate": "number"
+              }
+            ]
+          }
+        }
+      },
+
+      "RatePost": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "example": "product_id_example"
+          },
+          "rate": {
+            "type": "number",
+            "example": 4
+          }
+        }
+      }
+    }
+  }
+}
