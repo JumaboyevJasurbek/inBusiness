@@ -6,11 +6,11 @@ dotenv.config()
 
 export const dataSource = new DataSource({
   type: "postgres",
-  host: "john.db.elephantsql.com",
+  host: "tiny.db.elephantsql.com",
   port: 5432,
-  password: "rCkj0-epT1OeqFNICWW-PIBeMN-mQp5z",
-  username: "ociwyrdr",
-  database: "ociwyrdr",
+  password: "107DAW_qYYEqxBB_W_4GtKOgcITf5Mvf",
+  username: "xxhmrfmz",
+  database: "xxhmrfmz",
   entities: [path.join(__dirname, "..", "entities", "*.entity.{ts,js}")],
   migrations: [path.join(__dirname, "..", "migrations", "**/*.{ts,js}")],
   logging: true,

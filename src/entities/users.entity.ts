@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { CommentsEntity } from "./comments.entity"
-import { OrdersEntity } from "./orders.entity"
+import { ProjectsEntity } from "./projects.entity"
 
 @Entity({
   name: "users",
@@ -21,10 +20,23 @@ export class UsersEntity {
   })
   password!: string
 
-  @OneToMany(() => OrdersEntity, (order) => order.user_id)
-  order_id: OrdersEntity[]
+  @Column({
+    type: "character varying",
+    length: 32,
+  })
+  phone_number!: string
 
-  //? comments
-  @OneToMany(() => CommentsEntity, (comment) => comment.productId)
-  userComment: CommentsEntity[]
+  @Column({
+    type: "character varying",
+    length: 128,
+  })
+  email!: string
+
+  @Column({
+    default: false,
+  })
+  status: boolean
+
+  @OneToMany(() => ProjectsEntity, (project) => project.userId)
+  projectId: string
 }

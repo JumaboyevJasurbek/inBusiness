@@ -16,12 +16,14 @@ class Users {
 
   public async REGISTER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password } = req.body
+      const { username, password, email, phone_number, password1 } = req.body
 
       const newUser = await dataSource.getRepository(UsersEntity).findOne({
         where: {
           username,
           password,
+          email,
+          phone_number: phone_number,
         },
         comment: "error",
       })
@@ -31,22 +33,20 @@ class Users {
         return
       }
 
-      if (typeof username === "string" && typeof password === "string") {
-        const newUser = dataSource
-          .getRepository(UsersEntity)
-          .createQueryBuilder()
-          .insert()
-          .into(UsersEntity)
-          .values({ username, password })
-          .returning(["user_id"])
-          .execute()
+      const users = dataSource
+        .getRepository(UsersEntity)
+        .createQueryBuilder()
+        .insert()
+        .into(UsersEntity)
+        .values({ username, password, email, phone_number: phone_number })
+        .returning(["user_id"])
+        .execute()
 
-        res.json({
-          message: "User created",
-          token: sign({ user_id: (await newUser).raw[0].user_id }),
-          data: newUser,
-        })
-      }
+      res.json({
+        message: "User created",
+        token: sign({ user_id: (await users).raw[0].user_id }),
+        data: newUser,
+      })
     } catch (error) {
       next(res.json(new ErrorHandler("error in register", 503)))
     }
@@ -56,9 +56,9 @@ class Users {
 
   public async LOGIN(req: Request, res: Response, next: NextFunction) {
     try {
-      const { username, password } = req.body
+      const { email, password } = req.body
 
-      const foundUser = await dataSource.getRepository(UsersEntity).findOneBy({ username, password })
+      const foundUser = await dataSource.getRepository(UsersEntity).findOneBy({ email, password })
 
       // const [user] = foundUser;
 
