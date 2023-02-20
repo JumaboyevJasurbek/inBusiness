@@ -62,6 +62,15 @@ export class ProjectsEntity {
   })
   comments: string
 
+  @Column({ default: false })
+  status: boolean
+
+  @Column()
+  project_img: string
+
+  @Column()
+  company_img: string
+
   @ManyToOne(() => UsersEntity, (user) => user.projectId)
   userId: string
 }

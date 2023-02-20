@@ -3,7 +3,10 @@ import { dataSource } from "../../config/ormconfig"
 import { UsersEntity } from "../../entities/users.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
 import { sign } from "../../utils/jwt"
-
+// import { dataSource } from "../../config/ormconfig"
+// import { UsersEntity } from "../../entities/users.entity"
+// import { Client } from "../../config/redis"
+// import { v4 } from "uuid"
 class Users {
   public async GET(req: Request, res: Response): Promise<void | Response> {
     const users = await dataSource.getRepository(UsersEntity).find()
@@ -20,7 +23,7 @@ class Users {
           username,
           password,
           email,
-          phone_number,
+          phone_number: phone_number,
         },
         comment: "error",
       })
@@ -35,7 +38,7 @@ class Users {
         .createQueryBuilder()
         .insert()
         .into(UsersEntity)
-        .values({ username, password, email, phone_number })
+        .values({ username, password, email, phone_number: phone_number })
         .returning(["user_id"])
         .execute()
 
@@ -76,32 +79,7 @@ class Users {
         })
       }
     } catch (error) {
-      next(new ErrorHandler("Error is login", 503))
-    }
-  }
-
-  public async UPDATE_USER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
-    try {
-      const { username, password, email, phone_number } = req.body
-
-      const { id } = req.params
-
-      const users = dataSource
-        .getRepository(UsersEntity)
-        .createQueryBuilder()
-        .update(UsersEntity)
-        .set({ username, password, email, phone_number })
-        .where({ user_id: id })
-        .returning("*")
-        .execute()
-
-      res.json({
-        message: "User updated",
-        status: 201,
-        data: users,
-      })
-    } catch (error) {
-      next(res.json(new ErrorHandler("error in user updated", 503)))
+      next(new ErrorHandler(error as string, 503))
     }
   }
 
