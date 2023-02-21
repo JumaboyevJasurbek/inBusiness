@@ -24,6 +24,12 @@ export class UsersEntity {
     type: "character varying",
     length: 32,
   })
+  repeatPassword!: string
+
+  @Column({
+    type: "character varying",
+    length: 32,
+  })
   phone_number!: string
 
   @Column({

@@ -10,66 +10,50 @@ export class ProjectsEntity {
 
   @Column({
     type: "character varying",
+    length: 32,
+  })
+  project: string
+
+  @Column({
+    type: "character varying",
     length: 64,
   })
   company_name!: string
 
   @Column({
     type: "character varying",
-    length: 32,
-  })
-  phone_number: string
-
-  @Column({
-    type: "character varying",
     length: 128,
   })
-  email: string
+  business_age: string
 
   @Column({
     type: "character varying",
     length: 64,
   })
-  project_direction: string
+  employees_number: string
 
   @Column({
     type: "character varying",
     length: 64,
   })
-  country: string
+  payback: string
 
   @Column({
     type: "character varying",
     length: 64,
   })
-  tg_username: string
+  reason_for_sale: string
 
   @Column({
     type: "character varying",
     length: 64,
   })
-  inst_username: string
+  website: string
 
   @Column({
     type: "character varying",
-    length: 64,
   })
-  experience: string
-
-  @Column({
-    type: "character varying",
-    length: 64,
-  })
-  comments: string
-
-  @Column({ default: false })
-  status: boolean
-
-  @Column()
-  project_img: string
-
-  @Column()
-  company_img: string
+  img: string
 
   @ManyToOne(() => UsersEntity, (user) => user.projectId)
   userId: string

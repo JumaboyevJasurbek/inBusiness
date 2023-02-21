@@ -1,45 +1,58 @@
 import { NextFunction, Request, Response } from "express"
 import { dataSource } from "../../config/ormconfig"
+import { SuperUsersEntity } from "../../entities/superUsers.entity"
 import { UsersEntity } from "../../entities/users.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
 import { sign } from "../../utils/jwt"
 
-class Users {
+class Projects {
   public async GET(req: Request, res: Response): Promise<void | Response> {
-    const users = await dataSource.getRepository(UsersEntity).find()
+    const users = await dataSource.getRepository(SuperUsersEntity).find()
 
     res.json(users)
   }
 
-  public async REGISTER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  public async POST(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password, repeatPassword, email, phone_number } = req.body
+      const {
+        company_name,
+        comments,
+        company_img,
+        country,
+        email,
+        experience,
+        inst_username,
+        phone_number,
+        project_direction,
+        project_img,
+        tg_username,
+      } = req.body
 
-      const newUser = await dataSource.getRepository(UsersEntity).findOne({
-        where: {
-          email,
-        },
-        comment: "error",
-      })
-
-      if (newUser) {
-        res.status(401).send("User already existing")
-        return
-      }
-
-      const users = dataSource
-        .getRepository(UsersEntity)
+      const projects = dataSource
+        .getRepository(SuperUsersEntity)
         .createQueryBuilder()
         .insert()
-        .into(UsersEntity)
-        .values({ username, password, repeatPassword, email, phone_number })
-        .returning(["user_id"])
+        .into(SuperUsersEntity)
+        .values({
+          company_name,
+          comments,
+          company_img,
+          country,
+          email,
+          experience,
+          inst_username,
+          phone_number,
+          project_direction,
+          project_img,
+          tg_username,
+        })
+        .returning("*")
         .execute()
 
       res.json({
         message: "User created",
-        token: sign({ user_id: (await users).raw[0].user_id }),
-        data: newUser,
+        token: sign({ user_id: (await projects).raw[0].user_id }),
+        data: projects,
       })
     } catch (error) {
       next(res.json(new ErrorHandler("error in register", 503)))
@@ -68,7 +81,7 @@ class Users {
       } else {
         res.status(401).json({
           status: 401,
-          message: "wrong email or password",
+          message: "wrong username or password",
           token: null,
         })
       }
@@ -77,9 +90,9 @@ class Users {
     }
   }
 
-  public async UPDATE(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  public async UPDATE_USER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password, repeatPassword, email, phone_number } = req.body
+      const { username, password, email, phone_number } = req.body
 
       const { id } = req.params
 
@@ -87,8 +100,8 @@ class Users {
         .getRepository(UsersEntity)
         .createQueryBuilder()
         .update(UsersEntity)
-        .set({ username, password, repeatPassword, email, phone_number })
-        .where({ user_id: id })
+        .set({ username, password, email, phone_number })
+        .where({ id })
         .returning("*")
         .execute()
 
@@ -106,7 +119,7 @@ class Users {
     try {
       const { id } = req.params
 
-      const users = await dataSource.createQueryBuilder().delete().from(UsersEntity).where({ user_id: id }).execute()
+      const users = await dataSource.createQueryBuilder().delete().from(UsersEntity).where({ id }).execute()
 
       res.status(200).json({
         message: "User deleted successfully",
@@ -119,4 +132,4 @@ class Users {
   }
 }
 
-export default new Users()
+export default new Projects()

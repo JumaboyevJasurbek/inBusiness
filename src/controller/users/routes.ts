@@ -9,5 +9,5 @@ export default routes
   .get("/get", Users.GET)
   .post("/register", validation(UsersPostJoi), Users.REGISTER)
   .post("/login", validation(UsersPostJoi), Users.LOGIN)
-  .put("/update/:id", Users.UPDATE_USER)
+  .put("/update/:id", Users.UPDATE)
   .delete("/delete/:id", Users.DELETE)

@@ -9,6 +9,7 @@
     "compile": "tsc && node dist/server.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run compile\"",
     "start": "tsc && node ./dist/server.js",
+    "start1": "tsc && node ./dist/server.js",
     "build": "tsc -p . && firebase deploy",
     "migration:generate": "npx typeorm-ts-node-esm migration:generate ./src/migrations/table -d ./src/config/ormconfig.ts",
     "migration:run": "npx typeorm-ts-node-esm migration:run -d ./src/config/ormconfig.ts",
