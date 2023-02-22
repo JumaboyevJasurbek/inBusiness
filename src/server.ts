@@ -11,7 +11,7 @@ dotenv.config()
 
 const app: Application = express()
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 7070
 
 app.use(cors())
 const main = async (): Promise<void> => {
