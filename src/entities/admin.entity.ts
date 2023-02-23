@@ -1,8 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
-@Entity({
-  name: "admin",
-})
+@Entity({ name: "admin" })
 export class AdminEntity {
   @PrimaryGeneratedColumn("uuid")
   admin_id!: string
