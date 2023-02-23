@@ -2,33 +2,32 @@ import { NextFunction, Request, Response } from "express"
 import { dataSource } from "../../config/ormconfig"
 import { ProjectsEntity } from "../../entities/projects.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
-import { sign } from "../../utils/jwt"
+// import { sign } from "../../utils/jwt"
 
 class Projects {
   public async GET(req: Request, res: Response): Promise<void | Response> {
-    const users = await dataSource.getRepository(ProjectsEntity).find()
+    const users = await dataSource.getRepository(ProjectsEntity).find({ relations: { userId: true } })
 
     res.json(users)
   }
 
   public async POST(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { business_age, company_name, employees_number, img, payback, project, reason_for_sale, website } = req.body
-
-      const { id } = req.params
+      const { business_age, company_name, employees_number, img, payback, project, reason_for_sale, website, user_id } =
+        req.body
 
       const newProjects = await dataSource.getRepository(ProjectsEntity).findOne({
         where: {
-          company_name,
+          project,
         },
-        comment: "error",
+        comment: "Project already existing",
       })
 
       if (newProjects) {
         return res.status(401).send("Project already existing")
       }
 
-      const projects = dataSource
+      const projects = await dataSource
         .getRepository(ProjectsEntity)
         .createQueryBuilder()
         .insert()
@@ -42,18 +41,18 @@ class Projects {
           project,
           reason_for_sale,
           website,
-          userId: id,
+          userId: user_id,
         })
-        .returning(["user_id"])
+        .returning(["*"])
         .execute()
 
-      res.json({
+      res.status(201).json({
         message: "Project created",
-        token: sign({ user_id: (await projects).raw[0].user_id }),
-        data: newProjects,
+        status: 201,
+        data: projects,
       })
     } catch (error) {
-      next(res.json(new ErrorHandler("error in register project", 503)))
+      next(new ErrorHandler("error in register project", 503))
     }
   }
 

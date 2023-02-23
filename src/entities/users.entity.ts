@@ -44,5 +44,5 @@ export class UsersEntity {
   status: boolean
 
   @OneToMany(() => ProjectsEntity, (project) => project.userId)
-  projectId: string
+  projectId: ProjectsEntity[]
 }

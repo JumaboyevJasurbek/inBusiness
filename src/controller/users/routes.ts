@@ -1,13 +1,13 @@
 import { Router } from "express"
 import validation from "../../middleware/validation"
-import { UsersPostJoi } from "../../validation/validation"
+import { UsersLoginJoi, UsersRegisterJoi } from "../../validation/validation"
 import Users from "./users"
 
 const routes = Router()
 
 export default routes
-  .get("/get", Users.GET)
-  .post("/register", validation(UsersPostJoi), Users.REGISTER)
-  .post("/login", validation(UsersPostJoi), Users.LOGIN)
-  .put("/update/:id", Users.UPDATE)
-  .delete("/delete/:id", Users.DELETE)
+  .get("", Users.GET)
+  .post("", validation(UsersRegisterJoi), Users.REGISTER)
+  .post("", validation(UsersLoginJoi), Users.LOGIN)
+  .put("/:id", Users.UPDATE)
+  .delete("/:id", Users.DELETE)
