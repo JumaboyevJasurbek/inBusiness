@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express"
 import { dataSource } from "../../config/ormconfig"
 import { ProjectsEntity } from "../../entities/projects.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
-// import { sign } from "../../utils/jwt"
 
 class Projects {
   public async GET(req: Request, res: Response): Promise<void | Response> {
@@ -49,7 +48,7 @@ class Projects {
       res.status(201).json({
         message: "Project created",
         status: 201,
-        data: projects,
+        data: projects.raw[0],
       })
     } catch (error) {
       next(new ErrorHandler("error in register project", 503))
@@ -87,10 +86,10 @@ class Projects {
     try {
       const { id } = req.params
 
-      const users = await dataSource.createQueryBuilder().delete().from(ProjectsEntity).where({ userId: id }).execute()
+      const users = await dataSource.createQueryBuilder().delete().from(ProjectsEntity).where({ id }).execute()
 
       res.status(200).json({
-        message: "User deleted successfully",
+        message: "Projects deleted successfully",
         status: 205,
         data: users.raw[0],
       })

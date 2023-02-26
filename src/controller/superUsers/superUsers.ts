@@ -27,7 +27,7 @@ class Projects {
         tg_username,
       } = req.body
 
-      const projects = dataSource
+      const projects = await dataSource
         .getRepository(SuperUsersEntity)
         .createQueryBuilder()
         .insert()
@@ -93,7 +93,7 @@ class Projects {
 
       const { id } = req.params
 
-      const users = dataSource
+      const users = await dataSource
         .getRepository(SuperUsersEntity)
         .createQueryBuilder()
         .update(SuperUsersEntity)

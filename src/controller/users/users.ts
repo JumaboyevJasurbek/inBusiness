@@ -27,7 +27,7 @@ class Users {
         return
       }
 
-      const users = dataSource
+      const users = await dataSource
         .getRepository(UsersEntity)
         .createQueryBuilder()
         .insert()
@@ -83,7 +83,7 @@ class Users {
 
       const { id } = req.params
 
-      const users = dataSource
+      const users = await dataSource
         .getRepository(UsersEntity)
         .createQueryBuilder()
         .update(UsersEntity)
