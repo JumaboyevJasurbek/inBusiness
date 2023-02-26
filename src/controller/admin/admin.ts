@@ -7,7 +7,7 @@ import { sign } from "../../utils/jwt"
 // import { UsersEntity } from "../../entities/users.entity"
 // import { Client } from "../../config/redis"
 // import { v4 } from "uuid"
-class Users {
+class Admin {
   public async GET(req: Request, res: Response): Promise<void | Response> {
     const users = await dataSource.getRepository(UsersEntity).find()
 
@@ -33,7 +33,7 @@ class Users {
         return
       }
 
-      const users = dataSource
+      const users = await dataSource
         .getRepository(UsersEntity)
         .createQueryBuilder()
         .insert()
@@ -44,7 +44,7 @@ class Users {
 
       res.json({
         message: "User created",
-        token: sign({ user_id: (await users).raw[0].user_id }),
+        token: sign({ user_id: users.raw[0].user_id }),
         data: newUser,
       })
     } catch (error) {
@@ -100,4 +100,4 @@ class Users {
   }
 }
 
-export default new Users()
+export default new Admin()

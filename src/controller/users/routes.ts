@@ -7,7 +7,7 @@ const routes = Router()
 
 export default routes
   .get("", Users.GET)
-  .post("", validation(UsersRegisterJoi), Users.REGISTER)
-  .post("", validation(UsersLoginJoi), Users.LOGIN)
+  .post("/register", validation(UsersRegisterJoi), Users.REGISTER)
+  .post("/login", validation(UsersLoginJoi), Users.LOGIN)
   .put("/:id", Users.UPDATE)
   .delete("/:id", Users.DELETE)

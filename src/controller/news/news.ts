@@ -12,7 +12,7 @@ class News {
 
   public async POST(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { name } = req.body
+      const { img } = req.body
 
       const news = await dataSource
         .getRepository(NewsEntity)
@@ -20,7 +20,7 @@ class News {
         .insert()
         .into(NewsEntity)
         .values({
-          name,
+          img,
         })
         .returning("*")
         .execute()
@@ -39,7 +39,7 @@ class News {
 
   public async UPDATE(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { name } = req.body
+      const { img } = req.body
 
       const { id } = req.params
 
@@ -47,7 +47,7 @@ class News {
         .getRepository(NewsEntity)
         .createQueryBuilder()
         .update(NewsEntity)
-        .set({ name })
+        .set({ img })
         .where({ id })
         .returning(["*"])
         .execute()
@@ -71,7 +71,7 @@ class News {
       res.status(200).json({
         message: "news deleted successfully",
         status: 205,
-        data: news.raw[0].name,
+        data: news.raw[0],
       })
     } catch (error) {
       next(new ErrorHandler("error deleting", 503))

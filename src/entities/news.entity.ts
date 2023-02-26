@@ -11,5 +11,5 @@ export class NewsEntity {
     type: "character varying",
     length: 32,
   })
-  name!: string
+  img!: string
 }
