@@ -98,6 +98,44 @@ class Admin {
       next(new ErrorHandler("error deleting", 503))
     }
   }
+
+  public async STATUS_UPDATED(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+    try {
+      const { username, password, email, phone_number } = req.body
+
+      const newUser = await dataSource.getRepository(UsersEntity).findOne({
+        where: {
+          username,
+          password,
+          email,
+          phone_number: phone_number,
+        },
+        comment: "error",
+      })
+
+      if (newUser) {
+        res.status(401).send("User already existing")
+        return
+      }
+
+      const users = await dataSource
+        .getRepository(UsersEntity)
+        .createQueryBuilder()
+        .insert()
+        .into(UsersEntity)
+        .values({ username, password, email, phone_number: phone_number })
+        .returning(["user_id"])
+        .execute()
+
+      res.json({
+        message: "User created",
+        token: sign({ user_id: users.raw[0].user_id }),
+        data: newUser,
+      })
+    } catch (error) {
+      next(res.json(new ErrorHandler("error in register", 503)))
+    }
+  }
 }
 
 export default new Admin()
