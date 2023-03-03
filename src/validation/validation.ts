@@ -35,6 +35,15 @@ export const superUsersPostJoi = Joi.object({
 export const superUsersPutJoi = Joi.object({
   company_name: Joi.string(),
   phone_number: Joi.string(),
+  project_direction: Joi.string(),
+  email: Joi.string(),
+  country: Joi.string(),
+  tg_username: Joi.string(),
+  inst_username: Joi.string(),
+  experience: Joi.string(),
+  comments: Joi.string(),
+  project_img: Joi.string(),
+  company_img: Joi.string(),
 }).required()
 
 export const ProjectPostJoi = Joi.object({
@@ -52,12 +61,19 @@ export const ProjectPostJoi = Joi.object({
 export const ProjectPutJoi = Joi.object({
   business_age: Joi.string(),
   company_name: Joi.string(),
+  employees_number: Joi.string(),
+  img: Joi.string(),
+  payback: Joi.string(),
+  project: Joi.string(),
+  reason_for_sale: Joi.string(),
+  website: Joi.string(),
+  user_id: Joi.string(),
 }).required()
 
 export const NewsPostJoi = Joi.object({
-  name: Joi.string().required(),
+  img: Joi.string().required(),
 }).required()
 
 export const NewsPutJoi = Joi.object({
-  name: Joi.string(),
+  img: Joi.string(),
 }).required()
