@@ -53,9 +53,6 @@ export class ProjectsEntity {
   })
   img: string
 
-  @ManyToOne(() => UsersEntity, (user) => user.projectId, {
-    onDelete: "SET NULL",
-    cascade: true,
-  })
+  @ManyToOne(() => UsersEntity, (user) => user.projectId)
   userId: UsersEntity
 }
