@@ -33,13 +33,15 @@ class Users {
         .insert()
         .into(UsersEntity)
         .values({ username, password, repeatPassword, email, phone_number })
-        .returning(["user_id"])
+        .returning("*")
         .execute()
+
+      console.log(users)
 
       res.json({
         message: "User created",
-        token: sign({ user_id: (await users).raw[0].user_id }),
-        data: newUser,
+        token: sign({ user_id: users.raw[0].user_id }),
+        data: users.raw[0],
       })
     } catch (error) {
       next(res.json(new ErrorHandler("error in register", 503)))
