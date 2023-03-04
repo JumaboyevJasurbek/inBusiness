@@ -40,13 +40,11 @@ export class ProjectsEntity {
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   reason_for_sale: string
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   website: string
 

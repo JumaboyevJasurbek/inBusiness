@@ -9,7 +9,6 @@ export class NewsEntity {
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   img!: string
 }

@@ -7,19 +7,16 @@ export class AdminEntity {
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   name!: string
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   phone_number: string
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   password: string
 }

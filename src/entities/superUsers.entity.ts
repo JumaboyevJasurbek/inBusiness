@@ -9,13 +9,11 @@ export class SuperUsersEntity {
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   company_name!: string
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   phone_number: string
 
@@ -27,7 +25,6 @@ export class SuperUsersEntity {
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   project_direction: string
 

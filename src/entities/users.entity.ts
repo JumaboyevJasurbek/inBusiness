@@ -10,7 +10,6 @@ export class UsersEntity {
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   username!: string
 
@@ -28,13 +27,11 @@ export class UsersEntity {
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   phone_number!: string
 
   @Column({
     type: "character varying",
-    length: 128,
   })
   email!: string
 
