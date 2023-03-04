@@ -40,6 +40,10 @@ export class UsersEntity {
   })
   status: boolean
 
-  @OneToMany(() => ProjectsEntity, (project) => project.userId)
+  @OneToMany(() => ProjectsEntity, (project) => project.userId, {
+    onDelete: "CASCADE",
+    onUpdate: "NO ACTION",
+    cascade: true,
+  })
   projectId: ProjectsEntity[]
 }
