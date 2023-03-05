@@ -53,6 +53,35 @@ export class ProjectsEntity {
   })
   img: string
 
+  @Column({
+    type: "character varying",
+  })
+  investment_before: string
+
+  @Column({
+    type: "character varying",
+  })
+  investment_after: string
+
+  @Column({
+    type: "character varying",
+  })
+  revenue: string
+  @Column({
+    type: "character varying",
+  })
+  lump_cum_before: string
+
+  @Column({
+    type: "character varying",
+  })
+  lump_cum_after: string
+
+  @Column({
+    type: "character varying",
+  })
+  possible: string
+
   @ManyToOne(() => UsersEntity, (user) => user.projectId)
   userId: UsersEntity
 }
