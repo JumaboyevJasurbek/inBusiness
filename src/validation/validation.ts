@@ -56,6 +56,12 @@ export const ProjectPostJoi = Joi.object({
   reason_for_sale: Joi.string().required(),
   website: Joi.string().required(),
   user_id: Joi.string().required(),
+  investment_before: Joi.string().required(),
+  investment_after: Joi.string().required(),
+  revenue: Joi.string().required(),
+  lump_cum_before: Joi.string().required(),
+  lump_cum_after: Joi.string().required(),
+  possible: Joi.string().required(),
 }).required()
 
 export const ProjectPutJoi = Joi.object({
@@ -68,6 +74,12 @@ export const ProjectPutJoi = Joi.object({
   reason_for_sale: Joi.string(),
   website: Joi.string(),
   user_id: Joi.string(),
+  investment_before: Joi.string(),
+  investment_after: Joi.string(),
+  revenue: Joi.string(),
+  lump_cum_before: Joi.string(),
+  lump_cum_after: Joi.string(),
+  possible: Joi.string(),
 }).required()
 
 export const NewsPostJoi = Joi.object({

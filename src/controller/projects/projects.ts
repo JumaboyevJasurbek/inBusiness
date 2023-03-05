@@ -12,8 +12,24 @@ class Projects {
 
   public async POST(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { business_age, company_name, employees_number, img, payback, project, reason_for_sale, website, user_id } =
-        req.body
+      const {
+        business_age,
+        company_name,
+        employees_number,
+        img,
+        payback,
+        project,
+        reason_for_sale,
+        website,
+        user_id,
+
+        investment_after,
+        investment_before,
+        lump_cum_after,
+        lump_cum_before,
+        possible,
+        revenue,
+      } = req.body
 
       const newProjects = await dataSource.getRepository(ProjectsEntity).findOne({
         where: {
@@ -40,9 +56,15 @@ class Projects {
           project,
           reason_for_sale,
           website,
+          investment_after,
+          investment_before,
+          lump_cum_after,
+          lump_cum_before,
+          possible,
+          revenue,
           userId: user_id,
         })
-        .returning(["*"])
+        .returning("*")
         .execute()
 
       res.status(201).json({
@@ -51,7 +73,7 @@ class Projects {
         data: projects.raw[0],
       })
     } catch (error) {
-      next(new ErrorHandler("error in register project", 503))
+      next(res.json(new ErrorHandler("error in register project", 503)))
     }
   }
 
@@ -59,7 +81,22 @@ class Projects {
 
   public async UPDATE(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { business_age, company_name, employees_number, img, payback, project, reason_for_sale, website } = req.body
+      const {
+        business_age,
+        company_name,
+        employees_number,
+        img,
+        payback,
+        project,
+        reason_for_sale,
+        website,
+        investment_after,
+        investment_before,
+        lump_cum_after,
+        lump_cum_before,
+        possible,
+        revenue,
+      } = req.body
 
       const { id } = req.params
 
@@ -67,7 +104,22 @@ class Projects {
         .getRepository(ProjectsEntity)
         .createQueryBuilder()
         .update(ProjectsEntity)
-        .set({ business_age, company_name, employees_number, img, payback, project, reason_for_sale, website })
+        .set({
+          business_age,
+          company_name,
+          employees_number,
+          img,
+          payback,
+          project,
+          reason_for_sale,
+          website,
+          investment_after,
+          investment_before,
+          lump_cum_after,
+          lump_cum_before,
+          possible,
+          revenue,
+        })
         .where({ id })
         .returning("*")
         .execute()
@@ -86,13 +138,18 @@ class Projects {
     try {
       const { id } = req.params
 
-      const users = await dataSource.createQueryBuilder().delete().from(ProjectsEntity).where({ id }).execute()
+      const findUser = await dataSource.getRepository(ProjectsEntity).findOneBy({ id })
 
-      res.status(200).json({
-        message: "Projects deleted successfully",
-        status: 205,
-        data: users.raw[0],
-      })
+      if (findUser?.id) {
+        const users = await dataSource.createQueryBuilder().delete().from(ProjectsEntity).where({ id }).execute()
+        res.status(200).json({
+          message: "Projects deleted successfully",
+          status: 205,
+          data: users.raw[0],
+        })
+      } else {
+        next(res.json("this projects is not allowed"))
+      }
     } catch (error) {
       next(new ErrorHandler("error deleting", 503))
     }

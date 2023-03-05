@@ -49,13 +49,13 @@ class News {
         .update(NewsEntity)
         .set({ img })
         .where({ id })
-        .returning(["*"])
+        .returning("*")
         .execute()
 
-      res.json({
+      res.status(201).json({
         message: "News updated",
-        status: 201,
-        data: news,
+        status: 204,
+        data: news.raw[0],
       })
     } catch (error) {
       next(res.json(new ErrorHandler("error in news", 503)))
