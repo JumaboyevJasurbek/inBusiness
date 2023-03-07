@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { CategoryEntity } from "./categories.entity"
 import { UsersEntity } from "./users.entity"
 
 @Entity({
@@ -10,7 +11,6 @@ export class ProjectsEntity {
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   project: string
 
@@ -84,4 +84,7 @@ export class ProjectsEntity {
 
   @ManyToOne(() => UsersEntity, (user) => user.projectId)
   userId: UsersEntity
+
+  @ManyToOne(() => CategoryEntity, (category) => category.projectId)
+  categoryId: CategoryEntity
 }

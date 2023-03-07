@@ -4,14 +4,14 @@ import { SuperUsersEntity } from "../../entities/superUsers.entity"
 import { UsersEntity } from "../../entities/users.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
 
-class Projects {
+class SuperUsers {
   public async GET(req: Request, res: Response): Promise<void | Response> {
     const users = await dataSource.getRepository(SuperUsersEntity).find({})
 
     res.json(users)
   }
 
-  public async POST(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  public async REGISTER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
       const {
         company_name,
@@ -27,7 +27,19 @@ class Projects {
         tg_username,
       } = req.body
 
-      const projects = await dataSource
+      const newSuperUser = await dataSource.getRepository(SuperUsersEntity).findOne({
+        where: {
+          company_name,
+        },
+        comment: "error",
+      })
+
+      if (newSuperUser) {
+        res.status(401).send("SuperUser already existing")
+        return
+      }
+
+      const superUsers = await dataSource
         .getRepository(SuperUsersEntity)
         .createQueryBuilder()
         .insert()
@@ -51,7 +63,7 @@ class Projects {
       res.json({
         message: "User created",
         status: 201,
-        data: projects,
+        data: superUsers.raw[0],
       })
     } catch (error) {
       next(res.json(new ErrorHandler("error in register", 503)))
@@ -62,13 +74,9 @@ class Projects {
 
   public async LOGIN(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = req.body
+      const { phone_number } = req.body
 
-      const foundUser = await dataSource.getRepository(UsersEntity).findOneBy({ email, password })
-
-      // const [user] = foundUser;
-
-      // user.username == username && user.password && password;
+      const foundUser = await dataSource.getRepository(SuperUsersEntity).findOneBy({ phone_number })
 
       if (foundUser) {
         res.status(200).json({
@@ -79,7 +87,7 @@ class Projects {
       } else {
         res.status(401).json({
           status: 401,
-          message: "wrong username or password",
+          message: "wrong Phone number",
         })
       }
     } catch (error) {
@@ -105,7 +113,7 @@ class Projects {
       res.json({
         message: "User updated",
         status: 201,
-        data: users,
+        data: users.raw[0],
       })
     } catch (error) {
       next(res.json(new ErrorHandler("error in user updated", 503)))
@@ -129,4 +137,4 @@ class Projects {
   }
 }
 
-export default new Projects()
+export default new SuperUsers()

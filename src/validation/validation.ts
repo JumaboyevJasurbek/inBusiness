@@ -18,7 +18,7 @@ export const UsersPutJoi = Joi.object({
   password: Joi.string(),
 }).required()
 
-export const superUsersPostJoi = Joi.object({
+export const superUsersRegisterJoi = Joi.object({
   company_name: Joi.string().required(),
   phone_number: Joi.string().required(),
   project_direction: Joi.string().required(),
@@ -30,6 +30,10 @@ export const superUsersPostJoi = Joi.object({
   comments: Joi.string(),
   project_img: Joi.string(),
   company_img: Joi.string(),
+}).required()
+
+export const superUsersLoginJoi = Joi.object({
+  phone_number: Joi.string().required(),
 }).required()
 
 export const superUsersPutJoi = Joi.object({
@@ -62,6 +66,7 @@ export const ProjectPostJoi = Joi.object({
   lump_cum_before: Joi.string().required(),
   lump_cum_after: Joi.string().required(),
   possible: Joi.string().required(),
+  categoryId: Joi.string().required(),
 }).required()
 
 export const ProjectPutJoi = Joi.object({
@@ -80,6 +85,7 @@ export const ProjectPutJoi = Joi.object({
   lump_cum_before: Joi.string(),
   lump_cum_after: Joi.string(),
   possible: Joi.string(),
+  categoryId: Joi.string(),
 }).required()
 
 export const NewsPostJoi = Joi.object({
@@ -88,4 +94,20 @@ export const NewsPostJoi = Joi.object({
 
 export const NewsPutJoi = Joi.object({
   img: Joi.string(),
+}).required()
+
+export const CategoriesPostJoi = Joi.object({
+  title: Joi.string().required(),
+}).required()
+
+export const CategoriesPutJoi = Joi.object({
+  title: Joi.string(),
+}).required()
+
+export const UsersStatusUpdatePutJoi = Joi.object({
+  status: Joi.boolean().required(),
+}).required()
+
+export const SuperUsersStatusUpdatePutJoi = Joi.object({
+  status: Joi.boolean().required(),
 }).required()

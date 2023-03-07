@@ -15,13 +15,11 @@ export class UsersEntity {
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   password!: string
 
   @Column({
     type: "character varying",
-    length: 32,
   })
   repeatPassword!: string
 

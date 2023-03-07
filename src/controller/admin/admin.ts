@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { dataSource } from "../../config/ormconfig"
+import { SuperUsersEntity } from "../../entities/superUsers.entity"
 import { UsersEntity } from "../../entities/users.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
 import { sign } from "../../utils/jwt"
@@ -99,41 +100,53 @@ class Admin {
     }
   }
 
-  public async STATUS_UPDATED(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  public async USER_STATUS_UPDATED(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password, email, phone_number } = req.body
+      const { status } = req.body
 
-      const newUser = await dataSource.getRepository(UsersEntity).findOne({
-        where: {
-          username,
-          password,
-          email,
-          phone_number: phone_number,
-        },
-        comment: "error",
-      })
+      const { id } = req.params
 
-      if (newUser) {
-        res.status(401).send("User already existing")
-        return
-      }
-
-      const users = await dataSource
+      const news = await dataSource
         .getRepository(UsersEntity)
         .createQueryBuilder()
-        .insert()
-        .into(UsersEntity)
-        .values({ username, password, email, phone_number: phone_number })
-        .returning(["user_id"])
+        .update(UsersEntity)
+        .set({ status })
+        .where({ user_id: id })
+        .returning("*")
         .execute()
 
-      res.json({
-        message: "User created",
-        token: sign({ user_id: users.raw[0].user_id }),
-        data: newUser,
+      res.status(201).json({
+        message: "Users status updated",
+        status: 204,
+        data: news.raw[0],
       })
     } catch (error) {
-      next(res.json(new ErrorHandler("error in register", 503)))
+      next(res.json(new ErrorHandler("error in Users status update", 503)))
+    }
+  }
+
+  public async SUPER_USER_STATUS_UPDATED(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+    try {
+      const { status } = req.body
+
+      const { id } = req.params
+
+      const news = await dataSource
+        .getRepository(SuperUsersEntity)
+        .createQueryBuilder()
+        .update(SuperUsersEntity)
+        .set({ status })
+        .where({ id })
+        .returning("*")
+        .execute()
+
+      res.status(201).json({
+        message: "Super Users updated",
+        status: 204,
+        data: news.raw[0],
+      })
+    } catch (error) {
+      next(res.json(new ErrorHandler("error in SuperUsers status update", 503)))
     }
   }
 }

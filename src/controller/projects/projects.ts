@@ -5,7 +5,7 @@ import { ErrorHandler } from "../../exception/errorHandler"
 
 class Projects {
   public async GET(req: Request, res: Response): Promise<void | Response> {
-    const users = await dataSource.getRepository(ProjectsEntity).find({ relations: { userId: true } })
+    const users = await dataSource.getRepository(ProjectsEntity).find({ relations: { userId: true, categoryId: true } })
 
     res.json(users)
   }
@@ -29,6 +29,7 @@ class Projects {
         lump_cum_before,
         possible,
         revenue,
+        categoryId,
       } = req.body
 
       const newProjects = await dataSource.getRepository(ProjectsEntity).findOne({
@@ -62,6 +63,7 @@ class Projects {
           lump_cum_before,
           possible,
           revenue,
+          categoryId,
           userId: user_id,
         })
         .returning("*")
@@ -96,6 +98,7 @@ class Projects {
         lump_cum_before,
         possible,
         revenue,
+        categoryId,
       } = req.body
 
       const { id } = req.params
@@ -119,6 +122,7 @@ class Projects {
           lump_cum_before,
           possible,
           revenue,
+          categoryId,
         })
         .where({ id })
         .returning("*")

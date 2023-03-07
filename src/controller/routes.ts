@@ -4,6 +4,7 @@ import UserRouter from "./users/routes"
 import superUsersRouter from "./superUsers/routes"
 import projectsRouter from "./projects/routes"
 import newsRouter from "./news/routes"
+import categoryRouter from "./categories/routes"
 
 const routes = Router()
 export default routes
@@ -12,3 +13,4 @@ export default routes
   .use("/superUser", superUsersRouter)
   .use("/projects", projectsRouter)
   .use("/news", newsRouter)
+  .use("/category", categoryRouter)
