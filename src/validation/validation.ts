@@ -23,6 +23,7 @@ export const superUsersRegisterJoi = Joi.object({
   phone_number: Joi.string().required(),
   project_direction: Joi.string().required(),
   email: Joi.string(),
+  password: Joi.string().required(),
   country: Joi.string(),
   tg_username: Joi.string(),
   inst_username: Joi.string(),
@@ -33,7 +34,8 @@ export const superUsersRegisterJoi = Joi.object({
 }).required()
 
 export const superUsersLoginJoi = Joi.object({
-  phone_number: Joi.string().required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
 }).required()
 
 export const superUsersPutJoi = Joi.object({
@@ -41,6 +43,7 @@ export const superUsersPutJoi = Joi.object({
   phone_number: Joi.string(),
   project_direction: Joi.string(),
   email: Joi.string(),
+  password: Joi.string(),
   country: Joi.string(),
   tg_username: Joi.string(),
   inst_username: Joi.string(),
@@ -56,7 +59,6 @@ export const ProjectPostJoi = Joi.object({
   employees_number: Joi.string().required(),
   img: Joi.string().required(),
   payback: Joi.string().required(),
-  project: Joi.string().required(),
   reason_for_sale: Joi.string().required(),
   website: Joi.string().required(),
   user_id: Joi.string().required(),
@@ -75,7 +77,6 @@ export const ProjectPutJoi = Joi.object({
   employees_number: Joi.string(),
   img: Joi.string(),
   payback: Joi.string(),
-  project: Joi.string(),
   reason_for_sale: Joi.string(),
   website: Joi.string(),
   user_id: Joi.string(),

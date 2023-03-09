@@ -3,10 +3,11 @@ import { dataSource } from "../../config/ormconfig"
 import { SuperUsersEntity } from "../../entities/superUsers.entity"
 import { UsersEntity } from "../../entities/users.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
+import { sign } from "../../utils/jwt"
 
 class SuperUsers {
   public async GET(req: Request, res: Response): Promise<void | Response> {
-    const users = await dataSource.getRepository(SuperUsersEntity).find({})
+    const users = await dataSource.getRepository(SuperUsersEntity).find()
 
     res.json(users)
   }
@@ -19,6 +20,7 @@ class SuperUsers {
         company_img,
         country,
         email,
+        password,
         experience,
         inst_username,
         phone_number,
@@ -50,6 +52,7 @@ class SuperUsers {
           company_img,
           country,
           email,
+          password,
           experience,
           inst_username,
           phone_number,
@@ -61,8 +64,9 @@ class SuperUsers {
         .execute()
 
       res.json({
-        message: "User created",
+        message: "SuperUsers created",
         status: 201,
+        token: sign({ id: superUsers.raw[0].id }),
         data: superUsers.raw[0],
       })
     } catch (error) {
@@ -74,30 +78,44 @@ class SuperUsers {
 
   public async LOGIN(req: Request, res: Response, next: NextFunction) {
     try {
-      const { phone_number } = req.body
+      const { email, password } = req.body
 
-      const foundUser = await dataSource.getRepository(SuperUsersEntity).findOneBy({ phone_number })
+      const foundUser = await dataSource.getRepository(SuperUsersEntity).findOneBy({ email, password })
 
       if (foundUser) {
         res.status(200).json({
           message: "User found",
           status: 200,
+          token: sign({ user_id: foundUser.id }),
           data: foundUser,
         })
       } else {
         res.status(401).json({
           status: 401,
-          message: "wrong Phone number",
+          message: "wrong email or password",
         })
       }
     } catch (error) {
-      next(new ErrorHandler("Error is login", 503))
+      next(res.json(new ErrorHandler("Error is login", 503)))
     }
   }
 
   public async UPDATE(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { company_name, email, phone_number } = req.body
+      const {
+        company_name,
+        phone_number,
+        project_direction,
+        email,
+        password,
+        country,
+        tg_username,
+        inst_username,
+        experience,
+        comments,
+        project_img,
+        company_img,
+      } = req.body
 
       const { id } = req.params
 
@@ -105,13 +123,26 @@ class SuperUsers {
         .getRepository(SuperUsersEntity)
         .createQueryBuilder()
         .update(SuperUsersEntity)
-        .set({ company_name, email, phone_number })
+        .set({
+          company_name,
+          phone_number,
+          project_direction,
+          email,
+          password,
+          country,
+          tg_username,
+          inst_username,
+          experience,
+          comments,
+          project_img,
+          company_img,
+        })
         .where({ id })
         .returning("*")
         .execute()
 
       res.json({
-        message: "User updated",
+        message: "SuperUsers updated",
         status: 201,
         data: users.raw[0],
       })
@@ -132,7 +163,7 @@ class SuperUsers {
         data: users.raw[0],
       })
     } catch (error) {
-      next(new ErrorHandler("error deleting", 503))
+      next(res.json(new ErrorHandler("error superUsers deleting", 503)))
     }
   }
 }

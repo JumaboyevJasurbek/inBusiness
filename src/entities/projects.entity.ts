@@ -11,11 +11,6 @@ export class ProjectsEntity {
 
   @Column({
     type: "character varying",
-  })
-  project: string
-
-  @Column({
-    type: "character varying",
     length: 64,
   })
   company_name!: string

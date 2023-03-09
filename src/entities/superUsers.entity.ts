@@ -19,9 +19,13 @@ export class SuperUsersEntity {
 
   @Column({
     type: "character varying",
-    length: 128,
   })
   email: string
+
+  @Column({
+    type: "character varying",
+  })
+  password: string
 
   @Column({
     type: "character varying",
@@ -30,31 +34,26 @@ export class SuperUsersEntity {
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   country: string
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   tg_username: string
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   inst_username: string
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   experience: string
 
   @Column({
     type: "character varying",
-    length: 64,
   })
   comments: string
 

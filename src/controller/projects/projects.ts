@@ -18,7 +18,6 @@ class Projects {
         employees_number,
         img,
         payback,
-        project,
         reason_for_sale,
         website,
         user_id,
@@ -34,7 +33,7 @@ class Projects {
 
       const newProjects = await dataSource.getRepository(ProjectsEntity).findOne({
         where: {
-          project,
+          company_name,
         },
         comment: "Project already existing",
       })
@@ -54,7 +53,6 @@ class Projects {
           employees_number,
           img,
           payback,
-          project,
           reason_for_sale,
           website,
           investment_after,
@@ -89,7 +87,6 @@ class Projects {
         employees_number,
         img,
         payback,
-        project,
         reason_for_sale,
         website,
         investment_after,
@@ -113,7 +110,6 @@ class Projects {
           employees_number,
           img,
           payback,
-          project,
           reason_for_sale,
           website,
           investment_after,
