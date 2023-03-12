@@ -6,14 +6,14 @@ import { sign } from "../../utils/jwt"
 
 class Users {
   public async GET(req: Request, res: Response): Promise<void | Response> {
-    const users = await dataSource.getRepository(UsersEntity).find()
+    const users = await dataSource.getRepository(UsersEntity).find({ relations: { categoryId: true } })
 
     res.json(users)
   }
 
   public async REGISTER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password, repeatPassword, email, phone_number } = req.body
+      const { username, password, repeatPassword, email, phone_number, categoryId } = req.body
 
       const newUser = await dataSource.getRepository(UsersEntity).findOne({
         where: {
@@ -32,7 +32,7 @@ class Users {
         .createQueryBuilder()
         .insert()
         .into(UsersEntity)
-        .values({ username, password, repeatPassword, email, phone_number })
+        .values({ username, password, repeatPassword, email, phone_number, categoryId })
         .returning("*")
         .execute()
 
@@ -81,7 +81,7 @@ class Users {
 
   public async UPDATE(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password, repeatPassword, email, phone_number } = req.body
+      const { username, password, repeatPassword, email, phone_number, categoryId } = req.body
 
       const { id } = req.params
 
@@ -89,7 +89,7 @@ class Users {
         .getRepository(UsersEntity)
         .createQueryBuilder()
         .update(UsersEntity)
-        .set({ username, password, repeatPassword, email, phone_number })
+        .set({ username, password, repeatPassword, email, phone_number, categoryId })
         .where({ user_id: id })
         .returning("*")
         .execute()

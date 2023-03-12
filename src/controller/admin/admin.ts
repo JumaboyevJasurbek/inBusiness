@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { dataSource } from "../../config/ormconfig"
+import { AdminEntity } from "../../entities/admin.entity"
 import { SuperUsersEntity } from "../../entities/superUsers.entity"
 import { UsersEntity } from "../../entities/users.entity"
 import { ErrorHandler } from "../../exception/errorHandler"
@@ -10,43 +11,40 @@ import { sign } from "../../utils/jwt"
 // import { v4 } from "uuid"
 class Admin {
   public async GET(req: Request, res: Response): Promise<void | Response> {
-    const users = await dataSource.getRepository(UsersEntity).find()
+    const admin = await dataSource.getRepository(AdminEntity).find()
 
-    res.json(users)
+    res.json(admin)
   }
 
   public async REGISTER(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     try {
-      const { username, password, email, phone_number } = req.body
+      const { name, password, phone_number } = req.body
 
-      const newUser = await dataSource.getRepository(UsersEntity).findOne({
+      const newAdmin = await dataSource.getRepository(AdminEntity).findOne({
         where: {
-          username,
-          password,
-          email,
-          phone_number: phone_number,
+          phone_number,
         },
         comment: "error",
       })
 
-      if (newUser) {
-        res.status(401).send("User already existing")
+      if (newAdmin) {
+        res.status(401).send("Admin already existing")
         return
       }
 
-      const users = await dataSource
-        .getRepository(UsersEntity)
+      const admin = await dataSource
+        .getRepository(AdminEntity)
         .createQueryBuilder()
         .insert()
-        .into(UsersEntity)
-        .values({ username, password, email, phone_number: phone_number })
+        .into(AdminEntity)
+        .values({ name, password, phone_number })
         .returning(["user_id"])
         .execute()
 
       res.json({
-        message: "User created",
-        token: sign({ user_id: users.raw[0].user_id }),
-        data: newUser,
+        message: "Admin registered",
+        token: sign({ admin_id: admin.raw[0].admin_id }),
+        data: newAdmin,
       })
     } catch (error) {
       next(res.json(new ErrorHandler("error in register", 503)))
@@ -57,25 +55,25 @@ class Admin {
 
   public async LOGIN(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = req.body
+      const { phone_number, password } = req.body
 
-      const foundUser = await dataSource.getRepository(UsersEntity).findOneBy({ email, password })
+      const foundAdmin = await dataSource.getRepository(AdminEntity).findOneBy({ phone_number, password })
 
-      // const [user] = foundUser;
+      // const [user] = foundAdmin;
 
       // user.username == username && user.password && password;
 
-      if (foundUser) {
+      if (foundAdmin) {
         res.status(200).json({
           status: 200,
           message: "User found",
-          token: sign({ user_id: foundUser.user_id }),
-          data: foundUser,
+          token: sign({ admin_id: foundAdmin.admin_id }),
+          data: foundAdmin,
         })
       } else {
         res.status(401).json({
           status: 401,
-          message: "wrong username or password",
+          message: "wrong phone_number or password",
           token: null,
         })
       }
@@ -86,14 +84,14 @@ class Admin {
 
   public async DELETE(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { id } = req.params
+      const { admin_id } = req.params
 
-      const users = await dataSource.createQueryBuilder().delete().from(UsersEntity).where({ user_id: id }).execute()
+      const admin = await dataSource.createQueryBuilder().delete().from(AdminEntity).where({ admin_id }).execute()
 
       res.status(200).json({
         message: "User deleted successfully",
         status: 205,
-        data: users.raw[0],
+        data: admin.raw[0],
       })
     } catch (error) {
       next(new ErrorHandler("error deleting", 503))
