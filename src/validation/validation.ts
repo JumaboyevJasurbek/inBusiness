@@ -6,7 +6,6 @@ export const UsersRegisterJoi = Joi.object({
   repeatPassword: Joi.ref("password"),
   email: Joi.string().required(),
   phone_number: Joi.string().required(),
-  categoryId: Joi.string().required(),
 }).required()
 
 export const UsersLoginJoi = Joi.object({
@@ -19,6 +18,9 @@ export const AdminRegisterJoi = Joi.object({
   phone_number: Joi.string().required(),
   password: Joi.string().required(),
 }).required()
+
+
+
 
 export const AdminLoginJoi = Joi.object({
   phone_number: Joi.string().required(),

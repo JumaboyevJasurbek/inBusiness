@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { ProjectsEntity } from "./projects.entity"
-import { UserCategoryEntity } from "./user_categories.entity"
+// import { UserCategoryEntity } from "./user_categories.entity"
 
 @Entity({
   name: "users",
@@ -46,6 +46,6 @@ export class UsersEntity {
   })
   projectId: ProjectsEntity[]
 
-  @ManyToOne(() => UserCategoryEntity, (category) => category.userId)
-  categoryId: UserCategoryEntity
+  // @ManyToOne(() => UserCategoryEntity, (category) => category.userId)
+  // categoryId: UserCategoryEntity
 }
