@@ -24,7 +24,7 @@ class SuperUsers {
         experience,
         inst_username,
         phone_number,
-        project_direction,
+        categoryId,
         project_img,
         tg_username,
       } = req.body
@@ -56,7 +56,7 @@ class SuperUsers {
           experience,
           inst_username,
           phone_number,
-          project_direction,
+          categoryId,
           project_img,
           tg_username,
         })
@@ -105,7 +105,7 @@ class SuperUsers {
       const {
         company_name,
         phone_number,
-        project_direction,
+        categoryId,
         email,
         password,
         country,
@@ -126,7 +126,7 @@ class SuperUsers {
         .set({
           company_name,
           phone_number,
-          project_direction,
+          categoryId,
           email,
           password,
           country,

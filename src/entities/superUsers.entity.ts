@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { UserCategoryEntity } from "./user_categories.entity"
 
 @Entity({
   name: "super_users",
@@ -30,11 +31,6 @@ export class SuperUsersEntity {
   @Column({
     type: "character varying",
   })
-  project_direction: string
-
-  @Column({
-    type: "character varying",
-  })
   country: string
 
   @Column({
@@ -54,8 +50,9 @@ export class SuperUsersEntity {
 
   @Column({
     type: "character varying",
+    nullable: true
   })
-  comments: string
+  comments!: string
 
   @Column({ default: false })
   status: boolean
@@ -65,4 +62,8 @@ export class SuperUsersEntity {
 
   @Column()
   company_img: string
+  
+  @ManyToOne(() => UserCategoryEntity, (category)=> category.superUserId)
+  categoryId: UserCategoryEntity
+
 }

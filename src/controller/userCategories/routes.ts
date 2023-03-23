@@ -1,12 +1,12 @@
-// import { Router } from "express"
-// import validation from "../../middleware/validation"
-// import { CategoriesPostJoi, CategoriesPutJoi } from "../../validation/validation"
-// import categories from "./userCategories"
+import { Router } from "express"
+import validation from "../../middleware/validation"
+import { CategoriesPostJoi, CategoriesPutJoi } from "../../validation/validation"
+import categories from "./userCategories"
 
-// const routes = Router()
+const routes = Router()
 
-// export default routes
-//   .get("", categories.GET)
-//   .post("", validation(CategoriesPostJoi), categories.POST)
-//   .put("/:id", validation(CategoriesPutJoi), categories.UPDATE)
-//   .delete("/:id", categories.DELETE)
+export default routes
+  .get("", categories.GET)
+  .post("", validation(CategoriesPostJoi), categories.POST)
+  .put("/:id", validation(CategoriesPutJoi), categories.UPDATE)
+  .delete("/:id", categories.DELETE)

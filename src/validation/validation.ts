@@ -35,16 +35,16 @@ export const UsersPutJoi = Joi.object({
 export const superUsersRegisterJoi = Joi.object({
   company_name: Joi.string().required(),
   phone_number: Joi.string().required(),
-  project_direction: Joi.string().required(),
-  email: Joi.string(),
+  categoryId: Joi.string().required(),
+  email: Joi.string().required(),
   password: Joi.string().required(),
-  country: Joi.string(),
-  tg_username: Joi.string(),
-  inst_username: Joi.string(),
-  experience: Joi.string(),
+  country: Joi.string().required(),
+  tg_username: Joi.string().required(),
+  inst_username: Joi.string().required(),
+  experience: Joi.string().required(),
   comments: Joi.string(),
-  project_img: Joi.string(),
-  company_img: Joi.string(),
+  project_img: Joi.string().required(),
+  company_img: Joi.string().required(),
 }).required()
 
 export const superUsersLoginJoi = Joi.object({
@@ -55,7 +55,7 @@ export const superUsersLoginJoi = Joi.object({
 export const superUsersPutJoi = Joi.object({
   company_name: Joi.string(),
   phone_number: Joi.string(),
-  project_direction: Joi.string(),
+  categoryId: Joi.string(),
   email: Joi.string(),
   password: Joi.string(),
   country: Joi.string(),
